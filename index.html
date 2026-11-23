@@ -1,184 +1,181 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>설문 및 신청 페이지</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - Bean &amp; Mood</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; color: #333; background-color: #fcfbfa; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #f4f6f9;
-      color: #333;
-      line-height: 1.6;
-    }
+        /* 상단 고정 내비게이션 바 (GNB) */
+        header { background-color: #fff; border-bottom: 1px solid #e5e0dc; position: sticky; top: 0; z-index: 1000; }
+        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; }
+        .logo a { font-size: 24px; font-weight: bold; color: #6f4e37; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a { font-size: 16px; font-weight: 500; color: #555; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: #6f4e37; font-weight: bold; }
+        .auth-links { display: flex; gap: 12px; align-items: center; }
+        .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
+        .auth-links a.login { background-color: #fff; color: #6f4e37; }
+        .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; font-weight: bold; }
+        .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; }
 
-    /* 네비게이션 바 스타일 */
-    .navbar {
-      background-color: #1f2937;
-      color: #ffffff;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-    }
+        /* 회원가입 카드 */
+        .auth-wrapper { max-width: 480px; margin: 50px auto; padding: 0 20px; }
+        .auth-card { background: #fff; padding: 38px 34px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .auth-title { text-align: center; font-size: 24px; color: #332211; margin-bottom: 8px; }
+        .auth-subtitle { text-align: center; font-size: 14px; color: #777; margin-bottom: 28px; }
 
-    .navbar-brand {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #ffffff;
-      text-decoration: none;
-    }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 14px; font-weight: bold; color: #444; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; font-family: inherit; }
+        .form-group input:focus { outline: none; border-color: #6f4e37; }
 
-    .navbar-menu {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      list-style: none;
-    }
+        .input-with-btn { display: flex; gap: 8px; }
+        .check-btn { padding: 0 14px; background-color: #f4f1ee; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 13px; color: #332211; cursor: pointer; white-space: nowrap; }
+        .check-btn:hover { background-color: #e8e2dc; }
 
-    .navbar-menu a {
-      color: #d1d5db;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+        .terms-box { background-color: #fcfbfa; border: 1px solid #e5e0dc; border-radius: 4px; padding: 14px; margin: 20px 0; font-size: 13px; color: #555; }
+        .terms-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .terms-item:last-child { margin-bottom: 0; }
+        .terms-item input[type="checkbox"] { width: auto; }
 
-    .navbar-menu a:hover {
-      color: #ffffff;
-    }
+        .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .submit-btn:hover { background-color: #5a3e2b; }
 
-    /* 네비게이션 내 새 창 열기 버튼 */
-    .btn-external {
-      background-color: #3b82f6;
-      color: #ffffff !important;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.2s;
-    }
+        .bottom-link { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
+        .bottom-link a { color: #6f4e37; font-weight: bold; text-decoration: underline; }
 
-    .btn-external:hover {
-      background-color: #2563eb;
-    }
-
-    /* 메인 컨테이너 */
-    .container {
-      max-width: 900px;
-      margin: 32px auto;
-      padding: 0 16px;
-    }
-
-    /* 안내 및 새 창 링크 배너 */
-    .info-banner {
-      background-color: #ffffff;
-      border-radius: 10px;
-      padding: 20px 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .info-text h2 {
-      font-size: 1.15rem;
-      margin-bottom: 4px;
-      color: #111827;
-    }
-
-    .info-text p {
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-
-    .btn-outline {
-      display: inline-block;
-      padding: 10px 18px;
-      border: 1.5px solid #3b82f6;
-      color: #3b82f6;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .btn-outline:hover {
-      background-color: #3b82f6;
-      color: #ffffff;
-    }
-
-    /* 구글 폼 임베드 영역 */
-    .form-wrapper {
-      background-color: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .form-wrapper iframe {
-      width: 100%;
-      min-height: 950px;
-      border: none;
-      display: block;
-    }
-
-    /* 모바일 반응형 처리 */
-    @media (max-width: 640px) {
-      .navbar {
-        padding: 0 16px;
-      }
-      .navbar-menu {
-        gap: 12px;
-      }
-      .hide-mobile {
-        display: none;
-      }
-      .form-wrapper iframe {
-        min-height: 1100px;
-      }
-    }
-  </style>
+        footer { background-color: #332211; color: #aaa; text-align: center; padding: 30px 0; margin-top: 70px; font-size: 14px; }
+    </style>
 </head>
 <body>
 
-  <!-- 상단 네비게이션 바 -->
-  <nav class="navbar">
-    <a href="#" class="navbar-brand">My Project</a>
-    <ul class="navbar-menu">
-      <li class="hide-mobile"><a href="#form-section">설문 작성</a></li>
-      <li>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5_I9JULNB6ZlGgMrlbg7w2bElp49DEjGdrDIItCJNyt64lQ/viewform?usp=header" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="btn-external">
-          새 창에서 열기 ↗
-        </a>
-      </li>
-    </ul>
-  </nav>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><a href="index.html">Bean &amp; Mood</a></div>
+            <ul class="nav-links">
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="guestbook.html">Guestbook(방명록)</a></li>
+                <li><a href="notice.html">Customer Center</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="login">로그인</a>
+                <a href="signup.html" class="signup active">회원가입</a>
+                <a href="cart.html" class="cart-link">장바구니</a>
+            </div>
+        </nav>
+    </header>
 
-  <!-- 메인 콘텐츠 -->
-  <main class="container">
-    <!-- 새 창 이동 안내 박스 -->
-    <section class="info-banner">
-      <div class="info-text">
-        <h2>온라인 양식 작성</h2>
-        <p>아래 양식이 정상적으로 보이지 않거나 큰 화면에서 작성하려면 새 창으로 열어주세요.</p>
-      </div>
-      <a href="
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <h2 class="auth-title">회원가입</h2>
+            <p class="auth-subtitle">Bean &amp; Mood에서 나만의 홈카페 라이프를 시작해 보세요.</p>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupEmail">이메일 (아이디) *</label>
+                    <div class="input-with-btn">
+                        <input type="email" id="signupEmail" placeholder="example@beanmood.com" required>
+                        <button type="button" class="check-btn" id="dupCheckBtn">중복확인</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPw">비밀번호 *</label>
+                    <input type="password" id="signupPw" placeholder="8자 이상 입력하세요" minlength="8" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPwConfirm">비밀번호 확인 *</label>
+                    <input type="password" id="signupPwConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupName">이름 (닉네임) *</label>
+                    <input type="text" id="signupName" placeholder="홍길동" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPhone">연락처 *</label>
+                    <input type="tel" id="signupPhone" placeholder="010-1234-5678" required>
+                </div>
+
+                <div class="terms-box">
+                    <div class="terms-item" style="font-weight: bold; border-bottom: 1px solid #e5e0dc; padding-bottom: 8px;">
+                        <input type="checkbox" id="agreeAll">
+                        <label for="agreeAll">전체 약관에 동의합니다.</label>
+                    </div>
+                    <div class="terms-item">
+                        <input type="checkbox" class="term-check" id="agreeService" required>
+                        <label for="agreeService">[필수] 이용약관 동의</label>
+                    </div>
+                    <div class="terms-item">
+                        <input type="checkbox" class="term-check" id="agreePrivacy" required>
+                        <label for="agreePrivacy">[필수] 개인정보 수집 및 이용 동의</label>
+                    </div>
+                    <div class="terms-item">
+                        <input type="checkbox" class="term-check" id="agreeMarketing">
+                        <label for="agreeMarketing">[선택] 이벤트 및 신상품 소식 수신 동의</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">가입하기</button>
+            </form>
+
+            <div class="bottom-link">
+                이미 계정이 있으신가요? <a href="login.html">로그인하기</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Bean &amp; Mood. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const agreeAll = document.getElementById('agreeAll');
+        const termChecks = document.querySelectorAll('.term-check');
+
+        agreeAll.addEventListener('change', function() {
+            termChecks.forEach(chk => chk.checked = agreeAll.checked);
+        });
+
+        termChecks.forEach(chk => {
+            chk.addEventListener('change', function() {
+                agreeAll.checked = Array.from(termChecks).every(item => item.checked);
+            });
+        });
+
+        document.getElementById('dupCheckBtn').addEventListener('click', function() {
+            const email = document.getElementById('signupEmail').value.trim();
+            if (!email) {
+                alert('이메일을 먼저 입력해 주세요.');
+                return;
+            }
+            alert('사용 가능한 이메일입니다.');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pw = document.getElementById('signupPw').value;
+            const pwConfirm = document.getElementById('signupPwConfirm').value;
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+
+            if (pw !== pwConfirm) {
+                alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                return;
+            }
+
+            localStorage.setItem('beanMoodUser', JSON.stringify({ email, name }));
+            alert(name + '님, 회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
