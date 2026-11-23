@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Bean &amp; Mood</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; color: #333; background-color: #fcfbfa; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        header { background-color: #fff; border-bottom: 1px solid #e5e0dc; position: sticky; top: 0; z-index: 1000; }
+        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; }
+        .logo a { font-size: 24px; font-weight: bold; color: #6f4e37; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a { font-size: 16px; font-weight: 500; color: #555; }
+        .nav-links a:hover { color: #6f4e37; font-weight: bold; }
+        .auth-links { display: flex; gap: 12px; align-items: center; }
+        .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
+        .auth-links a.login { background-color: #fff; color: #6f4e37; font-weight: bold; }
+        .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; }
+        .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; }
+
+        .auth-wrapper { max-width: 420px; margin: 60px auto; padding: 0 20px; }
+        .auth-card { background: #fff; padding: 38px 32px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .auth-title { text-align: center; font-size: 24px; color: #332211; margin-bottom: 8px; }
+        .auth-subtitle { text-align: center; font-size: 14px; color: #777; margin-bottom: 28px; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 14px; font-weight: bold; color: #444; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; }
+        .form-group input:focus { outline: none; border-color: #6f4e37; }
+
+        .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+        .submit-btn:hover { background-color: #5a3e2b; }
+
+        .bottom-link { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
+        .bottom-link a { color: #6f4e37; font-weight: bold; text-decoration: underline; }
+
+        footer { background-color: #332211; color: #aaa; text-align: center; padding: 30px 0; margin-top: 70px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo"><a href="index.html">Bean &amp; Mood</a></div>
+            <ul class="nav-links">
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="guestbook.html">Guestbook(방명록)</a></li>
+                <li><a href="notice.html">Customer Center</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="login">로그인</a>
+                <a href="signup.html" class="signup">회원가입</a>
+                <a href="cart.html" class="cart-link">장바구니</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <h2 class="auth-title">로그인</h2>
+            <p class="auth-subtitle">Bean &amp; Mood에 오신 것을 환영합니다.</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">이메일 (아이디)</label>
+                    <input type="email" id="loginEmail" placeholder="example@beanmood.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPw">비밀번호</label>
+                    <input type="password" id="loginPw" placeholder="비밀번호를 입력하세요" required>
+                </div>
+
+                <button type="submit" class="submit-btn">로그인</button>
+            </form>
+
+            <div class="bottom-link">
+                아직 회원이 아니신가요? <a href="signup.html">회원가입하기</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Bean &amp; Mood. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const savedUser = JSON.parse(localStorage.getItem('beanMoodUser') || 'null');
+
+        // 방금 회원가입하고 넘어왔다면 이메일 칸 자동 입력 편의 제공
+        if (savedUser && savedUser.email) {
+            document.getElementById('loginEmail').value = savedUser.email;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPw').value;
+
+            if (!savedUser) {
+                alert('가입된 회원 정보가 없습니다. 먼저 회원가입을 진행해 주세요.');
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            if (savedUser.email === email && savedUser.password === password) {
+                alert(savedUser.name + '님, 로그인되었습니다! 첫 페이지로 이동합니다.');
+                window.location.href = 'index.html';
+            } else {
+                alert('이메일 또는 비밀번호가 일치하지 않습니다.');
+            }
+        });
+    </script>
+</body>
+</html>
