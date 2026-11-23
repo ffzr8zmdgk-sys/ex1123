@@ -10,20 +10,18 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* 상단 고정 내비게이션 바 (GNB) */
         header { background-color: #fff; border-bottom: 1px solid #e5e0dc; position: sticky; top: 0; z-index: 1000; }
         .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; }
         .logo a { font-size: 24px; font-weight: bold; color: #6f4e37; }
         .nav-links { display: flex; gap: 28px; }
-        .nav-links a { font-size: 16px; font-weight: 500; color: #555; transition: color 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: #6f4e37; font-weight: bold; }
+        .nav-links a { font-size: 16px; font-weight: 500; color: #555; }
+        .nav-links a:hover { color: #6f4e37; font-weight: bold; }
         .auth-links { display: flex; gap: 12px; align-items: center; }
         .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
         .auth-links a.login { background-color: #fff; color: #6f4e37; }
         .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; font-weight: bold; }
         .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; }
 
-        /* 회원가입 카드 */
         .auth-wrapper { max-width: 480px; margin: 50px auto; padding: 0 20px; }
         .auth-card { background: #fff; padding: 38px 34px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .auth-title { text-align: center; font-size: 24px; color: #332211; margin-bottom: 8px; }
@@ -31,17 +29,12 @@
 
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; font-size: 14px; font-weight: bold; color: #444; margin-bottom: 6px; }
-        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; font-family: inherit; }
+        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; }
         .form-group input:focus { outline: none; border-color: #6f4e37; }
-
-        .input-with-btn { display: flex; gap: 8px; }
-        .check-btn { padding: 0 14px; background-color: #f4f1ee; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 13px; color: #332211; cursor: pointer; white-space: nowrap; }
-        .check-btn:hover { background-color: #e8e2dc; }
 
         .terms-box { background-color: #fcfbfa; border: 1px solid #e5e0dc; border-radius: 4px; padding: 14px; margin: 20px 0; font-size: 13px; color: #555; }
         .terms-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .terms-item:last-child { margin-bottom: 0; }
-        .terms-item input[type="checkbox"] { width: auto; }
 
         .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
         .submit-btn:hover { background-color: #5a3e2b; }
@@ -65,7 +58,7 @@
             </ul>
             <div class="auth-links">
                 <a href="login.html" class="login">로그인</a>
-                <a href="signup.html" class="signup active">회원가입</a>
+                <a href="signup.html" class="signup">회원가입</a>
                 <a href="cart.html" class="cart-link">장바구니</a>
             </div>
         </nav>
@@ -74,15 +67,12 @@
     <main class="auth-wrapper">
         <div class="auth-card">
             <h2 class="auth-title">회원가입</h2>
-            <p class="auth-subtitle">Bean &amp; Mood에서 나만의 홈카페 라이프를 시작해 보세요.</p>
+            <p class="auth-subtitle">가입 완료 후 로그인 페이지로 자동 이동합니다.</p>
 
             <form id="signupForm">
                 <div class="form-group">
                     <label for="signupEmail">이메일 (아이디) *</label>
-                    <div class="input-with-btn">
-                        <input type="email" id="signupEmail" placeholder="example@beanmood.com" required>
-                        <button type="button" class="check-btn" id="dupCheckBtn">중복확인</button>
-                    </div>
+                    <input type="email" id="signupEmail" placeholder="example@beanmood.com" required>
                 </div>
 
                 <div class="form-group">
@@ -100,27 +90,10 @@
                     <input type="text" id="signupName" placeholder="홍길동" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="signupPhone">연락처 *</label>
-                    <input type="tel" id="signupPhone" placeholder="010-1234-5678" required>
-                </div>
-
                 <div class="terms-box">
-                    <div class="terms-item" style="font-weight: bold; border-bottom: 1px solid #e5e0dc; padding-bottom: 8px;">
-                        <input type="checkbox" id="agreeAll">
-                        <label for="agreeAll">전체 약관에 동의합니다.</label>
-                    </div>
                     <div class="terms-item">
-                        <input type="checkbox" class="term-check" id="agreeService" required>
-                        <label for="agreeService">[필수] 이용약관 동의</label>
-                    </div>
-                    <div class="terms-item">
-                        <input type="checkbox" class="term-check" id="agreePrivacy" required>
-                        <label for="agreePrivacy">[필수] 개인정보 수집 및 이용 동의</label>
-                    </div>
-                    <div class="terms-item">
-                        <input type="checkbox" class="term-check" id="agreeMarketing">
-                        <label for="agreeMarketing">[선택] 이벤트 및 신상품 소식 수신 동의</label>
+                        <input type="checkbox" id="agreeService" required>
+                        <label for="agreeService">[필수] 이용약관 및 개인정보 수집 동의</label>
                     </div>
                 </div>
 
@@ -138,42 +111,26 @@
     </footer>
 
     <script>
-        const agreeAll = document.getElementById('agreeAll');
-        const termChecks = document.querySelectorAll('.term-check');
-
-        agreeAll.addEventListener('change', function() {
-            termChecks.forEach(chk => chk.checked = agreeAll.checked);
-        });
-
-        termChecks.forEach(chk => {
-            chk.addEventListener('change', function() {
-                agreeAll.checked = Array.from(termChecks).every(item => item.checked);
-            });
-        });
-
-        document.getElementById('dupCheckBtn').addEventListener('click', function() {
-            const email = document.getElementById('signupEmail').value.trim();
-            if (!email) {
-                alert('이메일을 먼저 입력해 주세요.');
-                return;
-            }
-            alert('사용 가능한 이메일입니다.');
-        });
-
         document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const pw = document.getElementById('signupPw').value;
+            e.preventDefault(); // 기본 폼 전송(새로고침) 막기
+
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPw').value;
             const pwConfirm = document.getElementById('signupPwConfirm').value;
             const name = document.getElementById('signupName').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
 
-            if (pw !== pwConfirm) {
+            if (password !== pwConfirm) {
                 alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
                 return;
             }
 
-            localStorage.setItem('beanMoodUser', JSON.stringify({ email, name }));
+            // 가입한 회원 정보를 브라우저 저장소에 저장
+            const userData = { email, password, name };
+            localStorage.setItem('beanMoodUser', JSON.stringify(userData));
+
             alert(name + '님, 회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.');
+            
+            // 로그인 페이지로 이동
             window.location.href = 'login.html';
         });
     </script>
