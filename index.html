@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bean & Mood - 홈카페 전문 쇼핑몰</title>
+    <title>Bean &amp; Mood - 홈카페 전문 쇼핑몰</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Malgun Gothic', sans-serif; color: #333; background-color: #fcfbfa; line-height: 1.6; }
@@ -17,10 +17,12 @@
         .nav-links { display: flex; gap: 28px; }
         .nav-links a { font-size: 16px; font-weight: 500; color: #555; transition: color 0.2s; }
         .nav-links a:hover, .nav-links a.active { color: #6f4e37; font-weight: bold; }
-        .auth-links { display: flex; gap: 12px; }
+        .auth-links { display: flex; gap: 12px; align-items: center; }
         .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
         .auth-links a.login { background-color: #fff; color: #6f4e37; }
         .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; }
+        .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; font-weight: bold; }
+        .auth-links a.cart-link:hover { background-color: #e8e2dc; }
 
         /* 히어로 배너 */
         .hero {
@@ -39,11 +41,13 @@
 
         /* 베스트셀러 그리드 */
         .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 55px; }
-        .product-card { background: #fff; border: 1px solid #e5e0dc; border-radius: 6px; overflow: hidden; }
+        .product-card { background: #fff; border: 1px solid #e5e0dc; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
         .product-thumb { height: 170px; background-color: #f2ede8; display: flex; align-items: center; justify-content: center; color: #7a685b; font-weight: bold; }
         .product-info { padding: 15px; }
         .product-info h3 { font-size: 16px; margin-bottom: 6px; }
-        .product-info p { color: #6f4e37; font-weight: bold; }
+        .product-info p { color: #6f4e37; font-weight: bold; margin-bottom: 12px; }
+        .add-cart-btn { width: 100%; padding: 9px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .add-cart-btn:hover { background-color: #5a3e2b; }
 
         /* 방명록 미리보기 영역 */
         .guestbook-preview { background: #fff; border: 1px solid #e5e0dc; border-radius: 6px; padding: 20px; }
@@ -53,6 +57,13 @@
         .preview-date { color: #888; font-size: 13px; }
 
         footer { background-color: #332211; color: #aaa; text-align: center; padding: 30px 0; margin-top: 70px; font-size: 14px; }
+
+        @media (max-width: 900px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+            .product-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -69,6 +80,7 @@
             <div class="auth-links">
                 <a href="login.html" class="login">로그인</a>
                 <a href="signup.html" class="signup">회원가입</a>
+                <a href="cart.html" class="cart-link" id="navCartLink">장바구니</a>
             </div>
         </nav>
     </header>
@@ -76,41 +88,53 @@
     <section class="hero">
         <h1>오늘의 홈카페를 더 특별하게</h1>
         <p>엄선된 스페셜티 원두와 감성적인 홈카페 용품을 만나보세요.</p>
-        <a href="shop.html" class="hero-btn">지금 상품 보러가기</a>
+        <a href="cart.html" class="hero-btn">장바구니 바로가기</a>
     </section>
 
     <main class="container">
         <div class="section-header">
             <h2 class="section-title">베스트셀러 상품</h2>
-            <a href="shop.html" class="more-link">전체 상품 보기 &rarr;</a>
+            <a href="cart.html" class="more-link">장바구니 확인하기 &rarr;</a>
         </div>
         <div class="product-grid">
             <div class="product-card">
-                <div class="product-thumb">Single Origin</div>
-                <div class="product-info">
-                    <h3>에티오피아 예가체프 싱글오리진</h3>
-                    <p>18,000원</p>
+                <div>
+                    <div class="product-thumb">Single Origin</div>
+                    <div class="product-info">
+                        <h3>에티오피아 예가체프 싱글오리진</h3>
+                        <p>18,000원</p>
+                        <button type="button" class="add-cart-btn" onclick="addToCart(1, '에티오피아 예가체프 싱글오리진', '핸드드립용 분쇄 / 200g', 18000, 'Bean')">장바구니 담기</button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-thumb">Dripper Set</div>
-                <div class="product-info">
-                    <h3>세라믹 하리오 드리퍼 세트</h3>
-                    <p>24,000원</p>
+                <div>
+                    <div class="product-thumb">Dripper Set</div>
+                    <div class="product-info">
+                        <h3>세라믹 하리오 드리퍼 세트</h3>
+                        <p>24,000원</p>
+                        <button type="button" class="add-cart-btn" onclick="addToCart(2, '세라믹 하리오 드리퍼 세트', '화이트 / 1~2인용', 24000, 'Tool')">장바구니 담기</button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-thumb">House Blend</div>
-                <div class="product-info">
-                    <h3>콜롬비아 수프리모 블렌드</h3>
-                    <p>16,500원</p>
+                <div>
+                    <div class="product-thumb">House Blend</div>
+                    <div class="product-info">
+                        <h3>콜롬비아 수프리모 블렌드</h3>
+                        <p>16,500원</p>
+                        <button type="button" class="add-cart-btn" onclick="addToCart(3, '콜롬비아 수프리모 블렌드', '홀빈(원두 그대로) / 200g', 16500, 'Bean')">장바구니 담기</button>
+                    </div>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-thumb">Hand Grinder</div>
-                <div class="product-info">
-                    <h3>스테인리스 수동 핸드 그라인더</h3>
-                    <p>32,000원</p>
+                <div>
+                    <div class="product-thumb">Hand Grinder</div>
+                    <div class="product-info">
+                        <h3>스테인리스 수동 핸드 그라인더</h3>
+                        <p>32,000원</p>
+                        <button type="button" class="add-cart-btn" onclick="addToCart(4, '스테인리스 수동 핸드 그라인더', '실버 / 굵기 조절 가능', 32000, 'Tool')">장바구니 담기</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,13 +161,37 @@
     </footer>
 
     <script>
+        // 장바구니 개수 표시 및 담기 기능
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('beanMoodCart') || '[]');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const navCartLink = document.getElementById('navCartLink');
+            navCartLink.textContent = totalQty > 0 ? `장바구니 (${totalQty})` : '장바구니';
+        }
+
+        function addToCart(id, name, option, price, tag) {
+            const cart = JSON.parse(localStorage.getItem('beanMoodCart') || '[]');
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id, name, option, price, qty: 1, tag });
+            }
+            localStorage.setItem('beanMoodCart', JSON.stringify(cart));
+            updateCartBadge();
+            if (confirm(name + '을(를) 장바구니에 담았습니다. 장바구니 페이지로 이동할까요?')) {
+                window.location.href = 'cart.html';
+            }
+        }
+
+        updateCartBadge();
+
         // guestbook.html에서 저장한 최신 방명록 글을 첫 페이지 미리보기에도 연동하여 표시
         const previewContainer = document.getElementById('homeGuestbookPreview');
         const savedEntries = JSON.parse(localStorage.getItem('beanMoodGuestbook') || '[]');
 
         if (savedEntries.length > 0) {
             previewContainer.innerHTML = '';
-            // 최신 글 최대 4개까지 노출
             savedEntries.slice().reverse().slice(0, 4).forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'preview-item';
@@ -159,4 +207,3 @@
     </script>
 </body>
 </html>
-```[cite: 6]
