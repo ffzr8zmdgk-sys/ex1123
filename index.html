@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>설문 및 신청 페이지</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* 네비게이션 바 스타일 */
+    .navbar {
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .navbar-brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .navbar-menu {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .navbar-menu a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .navbar-menu a:hover {
+      color: #ffffff;
+    }
+
+    /* 네비게이션 내 새 창 열기 버튼 */
+    .btn-external {
+      background-color: #3b82f6;
+      color: #ffffff !important;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+
+    .btn-external:hover {
+      background-color: #2563eb;
+    }
+
+    /* 메인 컨테이너 */
+    .container {
+      max-width: 900px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    /* 안내 및 새 창 링크 배너 */
+    .info-banner {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .info-text h2 {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+
+    .info-text p {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 10px 18px;
+      border: 1.5px solid #3b82f6;
+      color: #3b82f6;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background-color: #3b82f6;
+      color: #ffffff;
+    }
+
+    /* 구글 폼 임베드 영역 */
+    .form-wrapper {
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-wrapper iframe {
+      width: 100%;
+      min-height: 950px;
+      border: none;
+      display: block;
+    }
+
+    /* 모바일 반응형 처리 */
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0 16px;
+      }
+      .navbar-menu {
+        gap: 12px;
+      }
+      .hide-mobile {
+        display: none;
+      }
+      .form-wrapper iframe {
+        min-height: 1100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 네비게이션 바 -->
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">My Project</a>
+    <ul class="navbar-menu">
+      <li class="hide-mobile"><a href="#form-section">설문 작성</a></li>
+      <li>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5_I9JULNB6ZlGgMrlbg7w2bElp49DEjGdrDIItCJNyt64lQ/viewform?usp=header" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="btn-external">
+          새 창에서 열기 ↗
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="container">
+    <!-- 새 창 이동 안내 박스 -->
+    <section class="info-banner">
+      <div class="info-text">
+        <h2>온라인 양식 작성</h2>
+        <p>아래 양식이 정상적으로 보이지 않거나 큰 화면에서 작성하려면 새 창으로 열어주세요.</p>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5_I9JULNB6ZlGgMrlbg7w2bElp49DEjGdrDIItCJNyt64lQ/viewform?usp=header" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="btn-outline">
+        구글 폼 새 창으로 열기 ↗
+      </a>
+    </section>
+
+    <!-- 구글 폼 임베드 영역 -->
+    <section id="form-section" class="form-wrapper">
+      <iframe 
+        src="https://docs.google.com/forms/d/e/1FAIpQLSe5_I9JULNB6ZlGgMrlbg7w2bElp49DEjGdrDIItCJNyt64lQ/viewform?embedded=true" 
+        title="구글 폼 양식"
+        loading="lazy">
+        로드 중…
+      </iframe>
+    </section>
+  </main>
+
+</body>
+</html>
