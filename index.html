@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 - Bean &amp; Mood</title>
+    <title>회원가입 - Bean &amp; Mood</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Malgun Gothic', sans-serif; color: #333; background-color: #fcfbfa; line-height: 1.6; }
@@ -18,12 +18,12 @@
         .nav-links a:hover { color: #6f4e37; font-weight: bold; }
         .auth-links { display: flex; gap: 12px; align-items: center; }
         .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
-        .auth-links a.login { background-color: #fff; color: #6f4e37; font-weight: bold; }
-        .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; }
+        .auth-links a.login { background-color: #fff; color: #6f4e37; }
+        .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; font-weight: bold; }
         .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; }
 
-        .auth-wrapper { max-width: 420px; margin: 60px auto; padding: 0 20px; }
-        .auth-card { background: #fff; padding: 38px 32px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .auth-wrapper { max-width: 480px; margin: 50px auto; padding: 0 20px; }
+        .auth-card { background: #fff; padding: 38px 34px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .auth-title { text-align: center; font-size: 24px; color: #332211; margin-bottom: 8px; }
         .auth-subtitle { text-align: center; font-size: 14px; color: #777; margin-bottom: 28px; }
 
@@ -32,7 +32,11 @@
         .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; }
         .form-group input:focus { outline: none; border-color: #6f4e37; }
 
-        .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+        .terms-box { background-color: #fcfbfa; border: 1px solid #e5e0dc; border-radius: 4px; padding: 14px; margin: 20px 0; font-size: 13px; color: #555; }
+        .terms-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .terms-item:last-child { margin-bottom: 0; }
+
+        .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
         .submit-btn:hover { background-color: #5a3e2b; }
 
         .bottom-link { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
@@ -62,25 +66,42 @@
 
     <main class="auth-wrapper">
         <div class="auth-card">
-            <h2 class="auth-title">로그인</h2>
-            <p class="auth-subtitle">Bean &amp; Mood에 오신 것을 환영합니다.</p>
+            <h2 class="auth-title">회원가입</h2>
+            <p class="auth-subtitle">가입 완료 후 로그인 페이지로 자동 이동합니다.</p>
 
-            <form id="loginForm">
+            <form id="signupForm">
                 <div class="form-group">
-                    <label for="loginEmail">이메일 (아이디)</label>
-                    <input type="email" id="loginEmail" placeholder="example@beanmood.com" required>
+                    <label for="signupEmail">이메일 (아이디) *</label>
+                    <input type="email" id="signupEmail" placeholder="example@beanmood.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="loginPw">비밀번호</label>
-                    <input type="password" id="loginPw" placeholder="비밀번호를 입력하세요" required>
+                    <label for="signupPw">비밀번호 *</label>
+                    <input type="password" id="signupPw" placeholder="8자 이상 입력하세요" minlength="8" required>
                 </div>
 
-                <button type="submit" class="submit-btn">로그인</button>
+                <div class="form-group">
+                    <label for="signupPwConfirm">비밀번호 확인 *</label>
+                    <input type="password" id="signupPwConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupName">이름 (닉네임) *</label>
+                    <input type="text" id="signupName" placeholder="홍길동" required>
+                </div>
+
+                <div class="terms-box">
+                    <div class="terms-item">
+                        <input type="checkbox" id="agreeService" required>
+                        <label for="agreeService">[필수] 이용약관 및 개인정보 수집 동의</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">가입하기</button>
             </form>
 
             <div class="bottom-link">
-                아직 회원이 아니신가요? <a href="signup.html">회원가입하기</a>
+                이미 계정이 있으신가요? <a href="login.html">로그인하기</a>
             </div>
         </div>
     </main>
@@ -90,31 +111,27 @@
     </footer>
 
     <script>
-        const savedUser = JSON.parse(localStorage.getItem('beanMoodUser') || 'null');
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 기본 폼 전송(새로고침) 막기
 
-        // 방금 회원가입하고 넘어왔다면 이메일 칸 자동 입력 편의 제공
-        if (savedUser && savedUser.email) {
-            document.getElementById('loginEmail').value = savedUser.email;
-        }
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPw').value;
+            const pwConfirm = document.getElementById('signupPwConfirm').value;
+            const name = document.getElementById('signupName').value.trim();
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPw').value;
-
-            if (!savedUser) {
-                alert('가입된 회원 정보가 없습니다. 먼저 회원가입을 진행해 주세요.');
-                window.location.href = 'signup.html';
+            if (password !== pwConfirm) {
+                alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
                 return;
             }
 
-            if (savedUser.email === email && savedUser.password === password) {
-                alert(savedUser.name + '님, 로그인되었습니다! 첫 페이지로 이동합니다.');
-                window.location.href = 'index.html';
-            } else {
-                alert('이메일 또는 비밀번호가 일치하지 않습니다.');
-            }
+            // 가입한 회원 정보를 브라우저 저장소에 저장
+            const userData = { email, password, name };
+            localStorage.setItem('beanMoodUser', JSON.stringify(userData));
+
+            alert(name + '님, 회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.');
+            
+            // 로그인 페이지로 이동
+            window.location.href = 'login.html';
         });
     </script>
 </body>
