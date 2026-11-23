@@ -10,18 +10,20 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
+        /* 상단 고정 내비게이션 바 (GNB) */
         header { background-color: #fff; border-bottom: 1px solid #e5e0dc; position: sticky; top: 0; z-index: 1000; }
         .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; }
         .logo a { font-size: 24px; font-weight: bold; color: #6f4e37; }
         .nav-links { display: flex; gap: 28px; }
-        .nav-links a { font-size: 16px; font-weight: 500; color: #555; }
-        .nav-links a:hover { color: #6f4e37; font-weight: bold; }
+        .nav-links a { font-size: 16px; font-weight: 500; color: #555; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: #6f4e37; font-weight: bold; }
         .auth-links { display: flex; gap: 12px; align-items: center; }
         .auth-links a { font-size: 14px; padding: 8px 14px; border-radius: 4px; border: 1px solid #dcd6d0; }
         .auth-links a.login { background-color: #fff; color: #6f4e37; font-weight: bold; }
         .auth-links a.signup { background-color: #6f4e37; color: #fff; border-color: #6f4e37; }
-        .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; }
+        .auth-links a.cart-link { background-color: #f4f1ee; color: #332211; border-color: #dcd6d0; font-weight: bold; }
 
+        /* 로그인 카드 */
         .auth-wrapper { max-width: 420px; margin: 60px auto; padding: 0 20px; }
         .auth-card { background: #fff; padding: 38px 32px; border: 1px solid #e5e0dc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .auth-title { text-align: center; font-size: 24px; color: #332211; margin-bottom: 8px; }
@@ -29,11 +31,19 @@
 
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; font-size: 14px; font-weight: bold; color: #444; margin-bottom: 6px; }
-        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; }
+        .form-group input { width: 100%; padding: 11px 12px; border: 1px solid #dcd6d0; border-radius: 4px; font-size: 14px; font-family: inherit; }
         .form-group input:focus { outline: none; border-color: #6f4e37; }
 
         .submit-btn { width: 100%; padding: 13px; background-color: #6f4e37; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 6px; }
         .submit-btn:hover { background-color: #5a3e2b; }
+
+        .auth-options { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; margin-top: 15px; }
+        .auth-options a:hover { color: #6f4e37; text-decoration: underline; }
+
+        .social-box { margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; }
+        .social-box p { font-size: 13px; color: #888; margin-bottom: 12px; }
+        .social-btns { display: flex; gap: 10px; }
+        .social-btn { flex: 1; padding: 10px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; border: none; }
 
         .bottom-link { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
         .bottom-link a { color: #6f4e37; font-weight: bold; text-decoration: underline; }
@@ -53,9 +63,9 @@
                 <li><a href="notice.html">Customer Center</a></li>
             </ul>
             <div class="auth-links">
-                <a href="login.html" class="login">로그인</a>
+                <a href="login.html" class="login active">로그인</a>
                 <a href="signup.html" class="signup">회원가입</a>
-                <a href="cart.html" class="cart-link">장바구니</a>
+                <a href="cart.html" class="cart-link" id="navCartLink">장바구니</a>
             </div>
         </nav>
     </header>
@@ -77,7 +87,25 @@
                 </div>
 
                 <button type="submit" class="submit-btn">로그인</button>
+
+                <div class="auth-options">
+                    <label style="cursor: pointer;">
+                        <input type="checkbox" id="keepLogin"> 로그인 상태 유지
+                    </label>
+                    <div>
+                        <a href="#">아이디·비밀번호 찾기</a> |
+                        <a href="signup.html">회원가입</a>
+                    </div>
+                </div>
             </form>
+
+            <div class="social-box">
+                <p>간편 로그인</p>
+                <div class="social-btns">
+                    <button type="button" class="social-btn" style="background-color: #FEE500; color: #3C1E1E;" onclick="alert('카카오 간편 로그인 연동 준비 중입니다.')">카카오 로그인</button>
+                    <button type="button" class="social-btn" style="background-color: #03C75A; color: #fff;" onclick="alert('네이버 간편 로그인 연동 준비 중입니다.')">네이버 로그인</button>
+                </div>
+            </div>
 
             <div class="bottom-link">
                 아직 회원이 아니신가요? <a href="signup.html">회원가입하기</a>
@@ -90,16 +118,21 @@
     </footer>
 
     <script>
-        const savedUser = JSON.parse(localStorage.getItem('beanMoodUser') || 'null');
+        (function() {
+            const cart = JSON.parse(localStorage.getItem('beanMoodCart') || '[]');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalQty > 0) {
+                document.getElementById('navCartLink').textContent = `장바구니 (${totalQty})`;
+            }
+        })();
 
-        // 방금 회원가입하고 넘어왔다면 이메일 칸 자동 입력 편의 제공
+        const savedUser = JSON.parse(localStorage.getItem('beanMoodUser') || 'null');
         if (savedUser && savedUser.email) {
             document.getElementById('loginEmail').value = savedUser.email;
         }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPw').value;
 
@@ -110,7 +143,7 @@
             }
 
             if (savedUser.email === email && savedUser.password === password) {
-                alert(savedUser.name + '님, 로그인되었습니다! 첫 페이지로 이동합니다.');
+                alert(savedUser.name + '님, 환영합니다! 메인 페이지로 이동합니다.');
                 window.location.href = 'index.html';
             } else {
                 alert('이메일 또는 비밀번호가 일치하지 않습니다.');
